@@ -41,3 +41,5 @@ string_numero_diez = str(numero_diez)
 
 decimal_numero_diez = float(numero_diez)
 # print(decimal_numero_diez)
+
+## Cambio en la parte final del archivo.
