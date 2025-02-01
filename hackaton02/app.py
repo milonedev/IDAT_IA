@@ -84,25 +84,26 @@ def ask():
     
     pdf = PDFFile.query.get(pdf_id)
 
-    openai_url = "https://api.openai.com/v1/completions"
-
+    openai_url = "https://api.openai.com/v1/chat/completions"
+    # openai_url = "https://api.openai.com/v1/completions"
+          
     headers = {
         "Authorization": "Bearer myToken",
         "Content-Type": "application/json"
     }
 
     payload = {
-        "model": "gpt-3.5-turbo",
-        "message": [
-            {"role": "system", "content": "Respon basandote en el siguiente documento. para las respuestas guiate del contenido del pdf por si hay preguntas puntuales."},
-            {"role": "system", "content": pdf.content},
-            {"role": "system", "content": user_question},    
-        ]
+        "model": "gpt-4o-mini",
+        "messages": [
+            { "role": "system", "content": f"Analiza el texto y responde las preguntas basándote en el siguiente texto: {repr(pdf.content)}" },
+            { "role": "user", "content": user_question }
+        ],
+        "temperature": 0.7
     }
 
     response  = requests.post(openai_url, json=payload, headers = headers)
 
-    print('response: ',response)
+    print('response: ',response.json())
 
     response_data = response.json()
     return jsonify({"response": response_data.get("choices", [{}])[0].get("message", {}).get("content", "error en la respuesta")})

@@ -54,7 +54,7 @@
         fetch('/ask', {
             method: 'POST',
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({question})
+            body: JSON.stringify({question: question.value})
         }).then( response => response.json())
         .then( data => {
             let answer = document.getElementById('answer')
