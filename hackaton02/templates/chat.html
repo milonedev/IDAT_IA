@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatea con tu PDF</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gray-800 w-full grid grid-cols-2 h-screen">
+    {% if filename %}
+    <div class="flex flex-col gap-6 border border-white w-full h-auto grid place-content-center">
+        <h2 class="text-white text-4xl uppercase font-bold text-center"> {{ filename }}</h2>
+        <img class="max-w-2xl w-full h-auto object-cover rounded-md shadow-white shadow-lg"
+            src="{{ url_for('static', filename='images/' + filename + '.png') }}" alt="pdf iamge" />
+    </div>
+    {% else %}
+    <span>no existe img</span>
+    {% endif%}
+    <div
+        class="min-w-2xl w-full border border-white text-black py-10 px-4 bg-[#f2f2f2] shadow-2xl rounded-lg flex flex-col items-center justify-center gap-20">
+        <h2 class="text-black text-4xl uppercase font-bold text-center">Chatea con tu PDF usando la IA.</h2>
+        <span>
+            {{ pdf_content[:200] }}...
+        </span>
+
+        <div class="flex flex-col gap-4 uppercase text-lg font-semibold">
+            <h2>Ingrese la consulta sobre el PDF.</h2>
+            <div class="flex flex-row justify-around min-w-2xl gap-10">
+                <input
+                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                    type="text" name="ask" id="ask" placeholder="Ingrese la consulta aqui.">
+                <button onclick="askAI()"
+                    class="flex flex-row gap-4 py-2 px-10 bg-blue-400 rounded-md  uppercase text-white font-semibold hover:text-blue-400 hover:bg-white border border-blue-400 hover:cursor-pointer animation-colors duration-300 ease-in-out">Question
+                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 12H5m14 0-4 4m4-4-4-4" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="border-2 border-dashed border-slate-800 min-w-2xl h-auto min-h-[320px] rounded-md py-10 px-4"> 
+                <p id="answer"></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    const askAI = () => {
+        let question = document.getElementById('ask');
+        fetch('/ask', {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({question})
+        }).then( response => response.json())
+        .then( data => {
+            let answer = document.getElementById('answer')
+            answer.innerHTML += data.response
+        })
+    }
+</script>
+
+</html>

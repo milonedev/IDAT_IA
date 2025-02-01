@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <title>Chat PDF</title>
+</head>
+
+<body class="bg-gray-800 grid place-content-center h-screen">
+    <div
+        class="min-w-2xl w-full border border-white text-black py-10 px-4 bg-[#f2f2f2] shadow-2xl rounded-lg flex flex-col items-center justify-center gap-20">
+        <h2 class="uppercase font-semibold text-center text-2xl">Ingrese en pdf con el cual chatear.</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data"
+            class="flex flex-col items-center justify-center bg-gray-200 px-4 py-10 rounded-lg shadow-md border border-2 border-dashed gap-6">
+            <input type="file" name="file" accept=".pdf" required />
+            <button type="submit" class="flex flex-row gap-4 py-2 px-10 bg-blue-400 rounded-md  uppercase text-white font-semibold hover:text-blue-400 hover:bg-white border border-blue-400 hover:cursor-pointer animation-colors duration-300 ease-in-out">send <svg class="w-6 h-6" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 12H5m14 0-4 4m4-4-4-4" />
+                </svg>
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>
